@@ -9,3 +9,5 @@ class RandInt {
     std::mt19937 mt;
     std::uniform_int_distribution<int> dist;
 };
+
+#pragma once

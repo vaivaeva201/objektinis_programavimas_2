@@ -1,6 +1,6 @@
 #ifndef KONTEINERIAI_H
 #define KONTEINERIAI_H
-#include "antrastes.h"
+#include "studentas.h"
 #include <list>
 #include <type_traits>
 #include <algorithm>
@@ -11,6 +11,7 @@ using std:: list;
 template < typename Container >
 void skaityti_failus (string pav, Container& grupe)
 {
+    string v, p;
 
     std::ifstream fd(pav);
     if (!fd) 
@@ -27,18 +28,27 @@ void skaityti_failus (string pav, Container& grupe)
         if(eil.empty()) continue;
         Studentas A;
         std::istringstream eilute(eil);
-        eilute >> A.Vardas >> A.Pavarde;
+        eilute >> v >> p;
+
+        A.setVardas(v);
+        A.setPavarde(p);
         
+        vector<int> temp_paz;
         int pazymys;
+
         while (eilute >> pazymys) 
         {
-            A.paz.push_back(pazymys);
+            temp_paz.push_back(pazymys);
         }
         
-        if (!A.paz.empty()) 
+        if (!temp_paz.empty()) 
         {
-            A.egz_paz = A.paz.back();
-            A.paz.pop_back();
+            int egz = temp_paz.back();
+            temp_paz.pop_back(); 
+
+            A.setPazymiai(temp_paz);
+            A.setEgzaminas(egz);
+
             skaiciuoti_viska(A);
             grupe.push_back(std::move(A));
         }
@@ -54,14 +64,14 @@ void rusiavimas_maz (Container& grupe)
     {
         grupe.sort([](const Studentas &a, const Studentas &b) 
         {
-            return a.Vidurkis > b.Vidurkis;
+            return a.vidurkis() > b.vidurkis();
         });
     } 
     else 
     {
         sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) 
         {
-            return a.Vidurkis > b.Vidurkis;
+            return a.vidurkis() > b.vidurkis();
         });
 
     }
@@ -81,7 +91,7 @@ void stunedu_skirstymas (Container& grupe)
 
     for (auto &x : grupe) 
     {
-        if (x.Vidurkis < 5.0)
+        if (x.vidurkis() < 5.0)
             vargsiukai.push_back(std::move(x));
         else
             kietakai.push_back(std::move(x));
@@ -104,9 +114,9 @@ void pirma_strategija(Container& grupe){
 
     for (const auto &s : grupe)
     {
-        if (s.Vidurkis < 5){
+        if (s.vidurkis() < 5){
             vargsiukai.push_back(s);
-        } else if (s.Vidurkis >= 5){
+        } else if (s.vidurkis() >= 5){
             kietakai.push_back(s);
         }
     }
@@ -124,7 +134,7 @@ void antra_strategija (Container& grupe)
 {
 
     Container vargsiukai;
-    while (grupe.back().Vidurkis < 5) 
+    while (grupe.back().vidurkis() < 5) 
     {
         vargsiukai.push_back(grupe.back());
         grupe.pop_back();
@@ -146,7 +156,7 @@ void trecia_strategija(Container& grupe) {
     
     auto it = std::stable_partition(grupe.begin(), grupe.end(), [](const Studentas& s) 
     {
-        return s.Vidurkis >= 5.0;
+        return s.vidurkis() >= 5.0;
     });
 
     std::move(it, grupe.end(), std::back_inserter(vargsiukai));
@@ -176,7 +186,7 @@ void tyrimas (string failas, Container& grupe, string tipas)
         nuskaitym += std::chrono::duration<double>(e - s).count();
 
         s = std::chrono::high_resolution_clock::now();
-        rusiavimas_did(grupe);
+        rusiavimas_maz(grupe);
         e = std::chrono::high_resolution_clock::now();
         rikiav += std::chrono::duration<double>(e - s).count();
 
@@ -290,7 +300,7 @@ void isvedimas (Container &vargsiukai, Container &kietakai)
         std::ofstream fr(pav);
         fr << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(20) << "Galutinis" << endl;
         for (const auto &s : duomenys) {
-            fr << left << setw(20) << s.Vardas << setw(20) << s.Pavarde << std::fixed << std::setprecision(2) << s.Vidurkis << "\n";
+            fr << left << setw(20) << s.vardas() << setw(20) << s.pavarde() << std::fixed << std::setprecision(2) << s.vidurkis() << "\n";
         }
         fr.close();
     };
