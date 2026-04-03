@@ -1,4 +1,4 @@
-#include "funkcijos.h"
+#include "studentas.h"
 
 void failu_generavimas(int Studentu_sk)
 {
@@ -46,7 +46,7 @@ void studentu_skirstymas(vector < Studentas > &grupe)
 
     for (auto &x : grupe) 
     {
-        if (x.Vidurkis < 5.0)
+        if (x.vidurkis() < 5.0) 
             vargsiukai.push_back(std::move(x));
         else
             kietakai.push_back(std::move(x));
@@ -71,7 +71,7 @@ void isvedimas_i_du_failus (vector < Studentas > &vargsiukai, vector < Studentas
         std::ofstream fr(pav);
         fr << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(20) << "Galutinis" << endl;
         for (const auto &s : duomenys) {
-            fr << left << setw(20) << s.Vardas << setw(20) << s.Pavarde << std::fixed << std::setprecision(2) << s.Vidurkis << "\n";
+            fr << left << setw(20) << s.vardas() << setw(20) << s.pavarde() << std::fixed << std::setprecision(2) << s.vidurkis() << "\n";
         }
         fr.close();
     };
@@ -92,21 +92,26 @@ void isvedimas_i_du_failus (vector < Studentas > &vargsiukai, vector < Studentas
 
 void skaiciuoti_viska(Studentas &x)
 {
-    double sum = accumulate(x.paz.begin(), x.paz.end(), 0.0);
-    x.Vidurkis = sum /(x.paz.size()*1.0) * 0.4 + x.egz_paz * 0.6;
+    vector<int> temp_paz = x.pazymiai(); 
+    int egz = x.egzaminas();
+
+    double sum = accumulate(temp_paz.begin(), temp_paz.end(), 0.0);
+    double vid = (sum / temp_paz.size()) * 0.4 + egz * 0.6;
+    x.setGalutinisV(vid);
 
     double mediana;
-    sort(x.paz.begin(), x.paz.end());
+    sort(temp_paz.begin(), temp_paz.end());
 
-    if (x.paz.size() % 2 == 0)
+    if (temp_paz.size() % 2 == 0)
     {
-        mediana = (x.paz[x.paz.size() / 2 - 1] + x.paz[x.paz.size() / 2]) / 2.0;
+        mediana = (temp_paz[temp_paz.size() / 2 - 1] + temp_paz[temp_paz.size() / 2]) / 2.0;
     }
     else
     {
-        mediana = x.paz[x.paz.size() / 2];
+        mediana = temp_paz[temp_paz.size() / 2];
     }
-    x.Mediana= mediana * 0.4 + x.egz_paz * 0.6;    
+    double med = mediana * 0.4 + egz * 0.6;
+    x.setGalutinisM(med);   
 }
 
 void skaityti_faila_automatiskai(string pav, vector<Studentas>& grupe)
@@ -128,18 +133,27 @@ void skaityti_faila_automatiskai(string pav, vector<Studentas>& grupe)
         if(eil.empty()) continue;
         Studentas A;
         std::istringstream eilute(eil);
-        eilute >> A.Vardas >> A.Pavarde;
-        
+        string v, p;
+        if (!(eilute >> v >> p)) continue;
+
+        vector<int> temp_paz;
         int pazymys;
         while (eilute >> pazymys) 
         {
-            A.paz.push_back(pazymys);
+            temp_paz.push_back(pazymys);
         }
         
-        if (!A.paz.empty()) 
+        if (!temp_paz.empty()) 
         {
-            A.egz_paz = A.paz.back();
-            A.paz.pop_back();
+            int egz = temp_paz.back();
+            temp_paz.pop_back();
+
+            Studentas A;
+            A.setVardas(v);
+            A.setPavarde(p);
+            A.setPazymiai(temp_paz);
+            A.setEgzaminas(egz);
+
             skaiciuoti_viska(A);
             grupe.push_back(std::move(A));
         }
@@ -219,19 +233,27 @@ void skaityti_faila(vector < Studentas > &grupe)
     buferis << fd.rdbuf();
     fd.close();
     getline(buferis, eil);
+    string v, p;
 
     while(getline(buferis, eil))
     {
-        Studentas A;
         std:: istringstream eilute(eil);
-        eilute >> A.Vardas >> A.Pavarde;
+        if (!(eilute >> v >> p)) continue;
+        vector<int> temp_paz;
         int pazymys;
         while (eilute >> pazymys)
         {
-            A.paz .push_back(pazymys);
+            temp_paz.push_back(pazymys);
         }
-        A.egz_paz = A.paz.back();
-        A.paz.pop_back();
+        int egz = temp_paz.back();
+        temp_paz.pop_back();
+
+        Studentas A;
+        A.setVardas(v);
+        A.setPavarde(p);
+        A.setPazymiai(temp_paz);
+        A.setEgzaminas(egz);
+
         skaiciuoti_viska(A);
         grupe.push_back(A);
     }
@@ -242,20 +264,22 @@ void skaityti_faila(vector < Studentas > &grupe)
 
 void duomenu_ivedimas(vector < Studentas > &grupe)
 {
-    Studentas A;
 
     while(true)
     {
-        int n, temp;
+        string v, p;
+        int temp;
+        vector<int> temp_paz;
+
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Įveskite studento vardą (jeigu įvedetė visus norimus studentus įrašykite 'x'): ";
-        getline(cin, A.Vardas);
-        if (A.Vardas == "x")
+        getline(cin, v);
+        if (v == "x")
         {
             break;
         }
         cout << "Įveskite studento pavardę: ";
-        getline(cin, A.Pavarde);
+        getline(cin, p);
 
         cout << "Įveskite semestro pažymius (jeigu įvedetė visus norimus pažymius įrašykite '-1'):" << endl;
         while (true)
@@ -273,7 +297,7 @@ void duomenu_ivedimas(vector < Studentas > &grupe)
                     break;
                 if(temp < 1 || temp > 10)
                     throw std::out_of_range("Neteisingas pažymys! Įveskite sveikąjį skaičių nuo 1 iki 10.");
-                A.paz.push_back(temp);
+                temp_paz.push_back(temp);
             }
             catch(const std::invalid_argument& e)
             {
@@ -284,20 +308,20 @@ void duomenu_ivedimas(vector < Studentas > &grupe)
                 std::cerr << e.what() << " Įveskite dar kartą: " << endl;
             }
         }
-        
+        int temp_egz;
         cout << "Įveskite egzamino pažymį: ";
         while (true)
         {   
             try
             {
-                cin >> A.egz_paz;   
+                cin >> temp_egz;   
                 if(cin.fail() || cin.peek() != '\n')
                 {
                     cin.clear();
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     throw std::invalid_argument("Įvedėte ne skaičių.");
                 }
-                if(A.egz_paz < 1 || A.egz_paz > 10)
+                if(temp_egz < 1 || temp_egz> 10)
                     throw std::out_of_range("Neteisingas pažymys! Įveskite sveikąjį skaičių nuo 1 iki 10.");
                 break;
             }
@@ -311,32 +335,60 @@ void duomenu_ivedimas(vector < Studentas > &grupe)
             }
         }
 
-        grupe.push_back(A);
-        A.paz.clear();
+        Studentas A;
+        A.setVardas(v);
+        A.setPavarde(p);
+        A.setPazymiai(temp_paz);
+        A.setEgzaminas(temp_egz);
+
+        grupe.push_back(std::move(A));
     }  
     
 }
 
 void vidurkis(Studentas &x)
 {
-    double sum = accumulate(x.paz.begin(), x.paz.end(), 0.0);
-    x.rez = sum /(x.paz.size()*1.0) * 0.4 + x.egz_paz * 0.6;
+    const std::vector<int>& p = x.pazymiai(); 
+ 
+    if (p.empty()) {
+        double galutinis = x.egzaminas() * 0.6;
+        x.setGalutinisV(galutinis);
+        return;
+    }
+
+    double sum = std::accumulate(p.begin(), p.end(), 0.0);
+    
+    double galutinis_rez = (sum / (p.size() * 1.0)) * 0.4 + x.egzaminas() * 0.6;
+    
+    x.setGalutinisV(galutinis_rez);
+
 }
 
 void mediana(Studentas &x)
 {
-    double mediana;
-    sort(x.paz.begin(), x.paz.end());
+    double med_reiksme;
+    vector<int> temp_paz = x.pazymiai();
 
-    if (x.paz.size() % 2 == 0)
+    if (temp_paz.empty()) 
     {
-        mediana = (x.paz[x.paz.size() / 2 - 1] + x.paz[x.paz.size() / 2]) / 2.0;
+        double galutinis = x.egzaminas() * 0.6;
+        x.setGalutinisM(galutinis);
+        return;
+    }
+
+    sort(temp_paz.begin(), temp_paz.end());
+
+    if (temp_paz.size() % 2 == 0)
+    {
+        med_reiksme = (temp_paz[temp_paz.size() / 2 - 1] + temp_paz[temp_paz.size() / 2]) / 2.0;
     }
     else
     {
-        mediana = x.paz[x.paz.size() / 2];
+        med_reiksme = temp_paz[temp_paz.size() / 2];
     }
-    x.rez = mediana * 0.4 + x.egz_paz * 0.6;
+
+    double galutinis_med = med_reiksme * 0.4 + x.egzaminas() * 0.6;
+    x.setGalutinisM(galutinis_med);
 }
 
 void skaiciu_generevimas(Studentas &A)
@@ -344,12 +396,15 @@ void skaiciu_generevimas(Studentas &A)
 
     RandInt rnd{1, 10};
     int kiek = rnd();
+    vector<int> temp_paz;
+
     for (int i = 0; i < kiek; i++)
     {
-       A.paz.push_back(rnd());
+       temp_paz.push_back(rnd());
     }
 
-    A.egz_paz = rnd();
+    A.setPazymiai(temp_paz);
+    A.setEgzaminas(rnd());
 
 }
 
@@ -391,7 +446,7 @@ void rezultatai (vector < Studentas > &grupe)
         for (auto &x : grupe)
         {
             vidurkis(x);
-            cout << left << setw(20) << x.Pavarde << setw(20) << x.Vardas << setw(20) << std::fixed << std::setprecision(2) << x.rez << endl;
+            cout << left << setw(20) << x.pavarde() << setw(20) << x.vardas() << setw(20) << std::fixed << std::setprecision(2) << x.vidurkis() << endl;
 
         }
     }
@@ -402,7 +457,7 @@ void rezultatai (vector < Studentas > &grupe)
         for (auto &x : grupe)
         {
         mediana(x);
-        cout << left << setw(20) << x.Pavarde << setw(20) << x.Vardas << setw(20) << std::fixed << std::setprecision(2) << x.rez << endl;
+        cout << left << setw(20) << x.pavarde() << setw(20) << x.vardas() << setw(20) << std::fixed << std::setprecision(2) << x.mediana() << endl;
         }
 
     }
@@ -417,7 +472,7 @@ void rezultatu_isvedimas(vector < Studentas > &grupe)
     buferis << "----------------------------------------------------------------------------" << endl;
 
     for (auto &x : grupe) {
-        buferis << left << setw(20) << x.Pavarde << setw(20) << x.Vardas << setw(20) << std::fixed << std::setprecision(2) << x.Vidurkis << setw(20) << std::fixed << std::setprecision(2) << x.Mediana << endl;
+        buferis << left << setw(20) << x.pavarde() << setw(20) << x.vardas() << setw(20) << std::fixed << std::setprecision(2) << x.vidurkis() << setw(20) << std::fixed << std::setprecision(2) << x.mediana() << endl;
     }
 
     int pasirinkimas = 0;
@@ -474,32 +529,32 @@ void rezultatu_isvedimas(vector < Studentas > &grupe)
 
 bool pagal_varda(const Studentas &a, const Studentas &b) 
 { 
-    return a.Vardas < b.Vardas; 
+    return a.vardas() < b.vardas(); 
 }
 
 bool pagal_pavarde(const Studentas &a, const Studentas &b) 
 { 
-    return a.Pavarde < b.Pavarde; 
+    return a.pavarde() < b.pavarde(); 
 }
 
 bool pagal_vid_did(const Studentas &a, const Studentas &b) 
 { 
-    return a.Vidurkis < b.Vidurkis; 
+    return a.vidurkis() < b.vidurkis(); 
 }
 
 bool pagal_vid_maz(const Studentas &a, const Studentas &b) 
 { 
-    return a.Vidurkis > b.Vidurkis; 
+    return a.vidurkis() > b.vidurkis(); 
 }
 
 bool pagal_med_did(const Studentas &a, const Studentas &b) 
 { 
-    return a.Mediana < b.Mediana; 
+    return a.mediana() < b.mediana(); 
 }
 
 bool pagal_med_maz(const Studentas &a, const Studentas &b) 
 { 
-    return a.Mediana > b.Mediana; 
+    return a.mediana() > b.mediana(); 
 }
 
 void rikiavimas(vector < Studentas > &grupe)
@@ -624,19 +679,22 @@ void meniu(vector < Studentas > &grupe)
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 while(true)
                 {
-                    Studentas A;
-                    int n, temp;
+                    string v, p;
                     cout << "Įveskite studento vardą (jeigu įvedetė visus norimus studentus įrašykite 'x'): ";
-                    getline(cin, A.Vardas);
-                    if (A.Vardas == "x")
+                    getline(cin, v);
+                    if (v == "x")
                     {
                         break;
                     }
                     cout << "Įveskite studento pavardę: ";
-                    getline(cin, A.Pavarde);
+                    getline(cin, p);
+
+                    Studentas A;
+                    A.setVardas(v);
+                    A.setPavarde(p);
+
                     skaiciu_generevimas(A);
-                    grupe.push_back(A);
-                    A.paz.clear();
+                    grupe.push_back(std::move(A));
                 } 
                 rezultatai (grupe);
 
@@ -650,27 +708,35 @@ void meniu(vector < Studentas > &grupe)
                 RandInt rnd{1, max};
                 int kiek = rnd();
 
-                for (int i = 0; i < kiek; i++) 
-                {
-                    Studentas A;
-                    RandInt rnd_index(0, 9); 
-
                     string vardai[10] = {"Emilija", "Alma", "Viktorija", "Egle", "Ieva", "Petras", "Jonas", "Titas", "Matas", "Lukas"};
                     string pavardes_m[10] = {"Pavardaite1", "Pavardaite2", "Pavardaite3", "Pavardaite4", "Pavardaite5", "Pavardaite6", "Pavardaite7", "Pavardaite8", "Pavardaite9", "Pavardaite10"};
                     string pavardes_v[10] = {"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"};
-                    A.Vardas = vardai[rnd_index()];
 
-                    if (*A.Vardas.rbegin() == 's') 
-                    {
-                        A.Pavarde = pavardes_v[rnd_index()];
-                    } 
+
+                for (int i = 0; i < kiek; i++) 
+                {
+                    Studentas A;
+                    RandInt rnd_idx(0, 9);
+                    int v_idx = rnd_idx();
+                    int p_idx = rnd_idx();
+
+                    string v = vardai[v_idx];
+                    string p;
+
+                    char paskutine = v.back();
+                    if (paskutine == 'a' || paskutine == 'e' || v == "Emilija") 
+                        p = pavardes_m[p_idx];
                     else 
-                    {
-                        A.Pavarde = pavardes_m[rnd_index()];
-                    }
+                        p = pavardes_v[p_idx];
+
+                    A.setVardas(v);
+                    A.setPavarde(p);
                     skaiciu_generevimas(A);
-                    grupe.push_back(A);
+                    skaiciuoti_viska(A);
+                    
+                    grupe.push_back(std::move(A));
                 }
+
                 rezultatai (grupe);
 
                 break;

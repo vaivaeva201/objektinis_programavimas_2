@@ -54,8 +54,8 @@ class Studentas {
         inline void setEgzaminas(int egz) {egz_paz_ = egz; }
         inline void setPazymiai(vector<int> paz) {paz_ = paz;}
 
-        void vidurkis();
-        void mediana();
+        void apskaiciuot_vidurkis();
+        void apskaiciuoti_mediana();
 };
 
 

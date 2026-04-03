@@ -1,5 +1,4 @@
-#include "antrastes.h"
-#include "funkcijos.h"
+#include "studentas.h"
 
 int main(){
 
