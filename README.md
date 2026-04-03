@@ -1,7 +1,11 @@
 # Antras_Laboratorinis
 # v1.1
 
-** "Class" ir "Struct" tyrimas **
+Ši programa lygina "class" ir "struct" naudojimą. v1.1 versija pritaikyta "class" ir buvo lyginama su v1.0 versijos "struct".
+Buvo naudojamas vektor konteineris su 3 strategija.
+Pateikti rezultatai yra trijų iteracijų vidurkis.
+
+**"Class" ir "Struct" tyrimas**
 
 | Tipas | Failo dydis | Optiizavimo vėliava | .exe failo dydis | Programos veilimo laikas |
 | :--- | :--- | :--- | :--- | :--- |
