@@ -1,4 +1,4 @@
-# Pirmas_Laboratorinis
+# Antras_Laboratorinis
 
 Programa suteikia galimybę apdoroti studentų duomenis. Vartotojas gali pasirinti tarp kelių programos funkciijų:
 1. Įvesti visus studentų duomenis ranka;

@@ -10,6 +10,7 @@ struct Studentas {
     double Vidurkis, Mediana;
 };
 
+
 void failu_generavimas(int Studentu_sk);
 void studentu_skirstymas(vector < Studentas > &grupe);
 void isvedimas_i_du_failus (vector < Studentas > &vargsiukai, vector < Studentas > &kietakai);
