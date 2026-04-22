@@ -119,6 +119,12 @@ class Studentas {
             return *this;
         }
 
+        //input operatorius
+        friend std::istream& operator>>(std::istream& cin, Studentas& s);
+
+        //output operatorius
+        friend std::ostream& operator<<(std::ostream& out, const Studentas &s);
+
 };
 
 
