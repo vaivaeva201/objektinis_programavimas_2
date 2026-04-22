@@ -38,8 +38,14 @@ class Studentas {
     public:
 
         Studentas() : Vardas_(""), Pavarde_(""), paz_({0}), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
+
         Studentas(string v, string p, vector<int> pazymiai) : Vardas_(v), Pavarde_(p), paz_(pazymiai), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { }
+
         Studentas(std::istream& is);
+
+        // copy konstruktorius
+        Studentas(const Studentas& s): Vardas_(s.Vardas_), Pavarde_(s.Pavarde_), paz_(s.paz_), egz_paz_(s.egz_paz_), Vidurkis_(s.Vidurkis_), Mediana_(s.Mediana_) {}
+
         ~Studentas(){
             Vardas_.clear();
             Pavarde_.clear();
