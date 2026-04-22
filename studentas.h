@@ -65,6 +65,22 @@ class Studentas {
 
         void apskaiciuot_vidurkis();
         void apskaiciuoti_mediana();
+
+        // copy assignment operatorius
+        Studentas& operator = (const Studentas& s)
+        {
+            if (this == &s)
+                return *this;
+
+            Vardas_ = s.Vardas_;
+            Pavarde_ = s.Pavarde_;
+            paz_ = s.paz_;
+            egz_paz_ = s.egz_paz_;
+            Vidurkis_ = s.Vidurkis_;
+            Mediana_ = s.Mediana_;
+
+            return *this;
+        }
 };
 
 
