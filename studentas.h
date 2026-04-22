@@ -31,14 +31,23 @@ class Studentas {
         string Pavarde_;
         vector <int> paz_;
         int egz_paz_;
-        double rez_;
+        //double rez_;
         double Vidurkis_;
         double Mediana_;
 
     public:
-        Studentas() : egz_paz_(0) { }    
+
+        Studentas() : egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
+        Studentas(string v, string p, vector<int> pazymiai) : Vardas_(v), Pavarde_(p), paz_(pazymiai), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { }
         Studentas(std::istream& is);
-        ~Studentas(){}
+        ~Studentas(){
+            Vardas_.clear();
+            Pavarde_.clear();
+            paz_.clear();
+            egz_paz_ = 0;
+            Vidurkis_ = 0.0;
+            Mediana_ = 0.0;
+        }
 
         inline string vardas() const { return Vardas_; }
         inline string pavarde() const { return Pavarde_; }

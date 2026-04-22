@@ -179,7 +179,7 @@ void tyrimas (string failas, Container& grupe, string tipas)
 
     for (int i = 0; i < 3; i++) 
     {
-
+        grupe.clear();
         auto s = std::chrono::high_resolution_clock::now();
         skaityti_failus(failas, grupe);
         auto e = std::chrono::high_resolution_clock::now();
@@ -213,7 +213,7 @@ void strategiju_tyrimas (string failas, Container& grupe, string tipas)
 
     for (int i = 0; i < 3; i++) 
     {
-
+        grupe.clear();
         auto s = std::chrono::high_resolution_clock::now();
         skaityti_failus(failas, grupe);
         auto e = std::chrono::high_resolution_clock::now();
@@ -242,7 +242,7 @@ void strategijos_du_tyrimas (string failas, Container& grupe, string tipas)
 
     for (int i = 0; i < 3; i++) 
     {
-
+        grupe.clear();
         auto s = std::chrono::high_resolution_clock::now();
         skaityti_failus(failas, grupe);
         auto e = std::chrono::high_resolution_clock::now();
@@ -271,7 +271,7 @@ void strategijos_trys_tyrimas (string failas, Container& grupe, string tipas)
 
     for (int i = 0; i < 3; i++) 
     {
-
+        grupe.clear();
         auto s = std::chrono::high_resolution_clock::now();
         skaityti_failus(failas, grupe);
         auto e = std::chrono::high_resolution_clock::now();
