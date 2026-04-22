@@ -37,7 +37,7 @@ class Studentas {
 
     public:
 
-        Studentas() : egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
+        Studentas() : Vardas_(""), Pavarde_(""), paz_({0}), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
         Studentas(string v, string p, vector<int> pazymiai) : Vardas_(v), Pavarde_(p), paz_(pazymiai), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { }
         Studentas(std::istream& is);
         ~Studentas(){
