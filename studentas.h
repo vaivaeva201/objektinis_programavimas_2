@@ -44,7 +44,22 @@ class Studentas {
         Studentas(std::istream& is);
 
         // copy konstruktorius
-        Studentas(const Studentas& s): Vardas_(s.Vardas_), Pavarde_(s.Pavarde_), paz_(s.paz_), egz_paz_(s.egz_paz_), Vidurkis_(s.Vidurkis_), Mediana_(s.Mediana_) {}
+        Studentas(const Studentas& s): 
+            Vardas_(s.Vardas_), 
+            Pavarde_(s.Pavarde_), 
+            paz_(s.paz_), 
+            egz_paz_(s.egz_paz_), 
+            Vidurkis_(s.Vidurkis_), 
+            Mediana_(s.Mediana_) {}
+
+        // move konstruktorius
+        Studentas(Studentas&& s) noexcept : 
+            Vardas_(move(s.Vardas_)), 
+            Pavarde_(move(s.Pavarde_)), 
+            paz_(move(s.paz_)),
+            egz_paz_(s.egz_paz_),
+            Vidurkis_(s.Vidurkis_),
+            Mediana_(s.Mediana_) {}
 
         ~Studentas(){
             Vardas_.clear();
