@@ -59,7 +59,7 @@ class Studentas {
             paz_(move(s.paz_)),
             egz_paz_(s.egz_paz_),
             Vidurkis_(s.Vidurkis_),
-            Mediana_(s.Mediana_) {}
+            Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
 
         ~Studentas(){
             Vardas_.clear();
@@ -102,6 +102,23 @@ class Studentas {
 
             return *this;
         }
+
+        // move assignment operatorius
+        Studentas& operator = (Studentas&& s) noexcept
+        {
+            if (this == &s) 
+                return *this;
+
+            Vardas_ = move(s.Vardas_);
+            Pavarde_ = move(s.Pavarde_);
+            paz_ = move(s.paz_);
+            egz_paz_ = s.egz_paz_;
+            Vidurkis_ = s.Vidurkis_;
+            Mediana_ = s.Mediana_;
+
+            return *this;
+        }
+
 };
 
 
