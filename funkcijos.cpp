@@ -233,29 +233,14 @@ void skaityti_faila(vector < Studentas > &grupe)
     buferis << fd.rdbuf();
     fd.close();
     getline(buferis, eil);
-    string v, p;
 
     while(getline(buferis, eil))
     {
-        std:: istringstream eilute(eil);
-        if (!(eilute >> v >> p)) continue;
-        vector<int> temp_paz;
-        int pazymys;
-        while (eilute >> pazymys)
-        {
-            temp_paz.push_back(pazymys);
-        }
-        int egz = temp_paz.back();
-        temp_paz.pop_back();
-
+       std::istringstream eilute(eil);
         Studentas A;
-        A.setVardas(v);
-        A.setPavarde(p);
-        A.setPazymiai(temp_paz);
-        A.setEgzaminas(egz);
-
+        eilute >> A;
         skaiciuoti_viska(A);
-        grupe.push_back(A);
+        grupe.push_back(std::move(A));
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
@@ -624,7 +609,7 @@ void meniu(vector < Studentas > &grupe)
 {
     int pasirinkimas = 0;
 
-    while(pasirinkimas != 6)
+    while(pasirinkimas != 7)
     {    
         cout << endl;
         cout << "Pasirinkite programos eigą: " << endl;
@@ -634,7 +619,8 @@ void meniu(vector < Studentas > &grupe)
         cout << "3 - Generuoti studentų vardus, pavardes ir pažymius;" << endl;
         cout << "4 - Nuskaityti duomenis iš failo;" << endl;
         cout << "5 - Testuoti programą;" << endl;
-        cout << "6 - Baigti darbą;" << endl;
+        cout << "6 - Testuoti klasę;" << endl;
+        cout << "7 - Baigti darbą;" << endl;
         cout << endl;
 
         while (true)
@@ -648,7 +634,7 @@ void meniu(vector < Studentas > &grupe)
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         throw std::invalid_argument("Įvedėte ne skaičių.");
                     }
-                    if(pasirinkimas < 1 ||  pasirinkimas > 6)
+                    if(pasirinkimas < 1 ||  pasirinkimas > 7)
                         throw std::out_of_range("Neteisingas pasirinkimas! Prašau įveskite vieną iš duotų variantų.");
                     break;
                 }
@@ -777,6 +763,88 @@ void meniu(vector < Studentas > &grupe)
                 break;
             }    
             case 6:
+            {
+                cout << "Pasirinkote testuoti klasę " << endl;
+                cout << "-----------------------------------------------------------" << endl;
+                cout << "1. Default konstruktorius:" << endl;
+                Studentas s1;
+                if (s1.vardas() == "" && s1.pavarde() == "" && s1.egzaminas() == 0 && s1.vidurkis() == 0.0 && s1.mediana() == 0.0)
+                    cout << "Default konstruktorius VEIKIA" << endl;
+                else 
+                    cout << "Default konstruktorius NEVEIKIA" << endl;
+                cout << endl;
+
+                cout << "2. Pilnas konstruktorius: " << endl;
+                Studentas s2("Vardas", "Pavarde", {9, 8, 7, 6, 9});
+                if (s2 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s2.egzaminas() == 0 && s2.vidurkis() == 0.0 && s2.mediana() == 0.0)
+                     cout << "Konstruktorius su parametrais veikia VEIKIA" << endl;
+                else 
+                    cout << "Konstruktorius su parametrais NEVEIKIA" << endl;
+                cout << endl;
+
+                cout << "3. Kopijavimo konstruktorius: " << endl;
+                Studentas s3(s2);
+                if(s3 == s2)
+                    cout<<"Kopijavimo konstruktorius VEIKIA"<<endl;
+                else 
+                    cout<<"Kopijavimo konstruktorius NEVEIKIA"<<endl;
+                cout << endl;
+
+                cout << "4. Copy assignment operatorius: " << endl;
+                Studentas s4;
+                s4 = s2;
+                if(s4 == s2)
+                    cout<<"Copy assignment operatorius VEIKIA"<<endl;
+                else 
+                    cout<<"Copy assignment operatorius NEVEIKIA"<<endl;
+                cout << endl;
+
+                cout << "5. Move konstruktorius: " << endl;
+                Studentas s5(std::move(s2));
+                if(s5 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s2.Clear() == true)
+                    cout<<"Move konstruktorius VEIKIA"<<endl;
+                else 
+                    cout<<"Move konstruktorius NEVEIKIA"<<endl;
+                cout << endl;
+
+                cout << "6. Move assignment operatorius: " << endl;
+                Studentas s("Vardas", "Pavarde", {9, 8, 7, 6, 9});
+                Studentas s6;
+                s6 = std::move(s);
+                if(s6 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s.Clear() == true)
+                    cout<<"Move assignment VEIKIA"<<endl;
+                else 
+                    cout<<"Move assignment operatorius NEVEIKIA"<<endl;
+                cout << endl;
+
+                cout << "7. Destruktorius: " << endl;
+                s4.~Studentas();
+                if(s4.Clear() == true)
+                    cout<<"Destruktorius VEIKIA"<<endl;
+                else 
+                    cout<<"Destruktorius NEVEIKIA"<<endl;
+                cout << endl;
+
+                cout << "8. Ivesties metodas: " << endl;
+                std::istringstream in ("Vardas Pavarde 9 8 9 -1 9");
+                Studentas s7;
+                in >> s7;
+                if (s7.vardas() == "Vardas" && s7.pavarde() == "Pavarde" && s7.egzaminas() == 9)
+                    cout << "Ivesties metodas VEIKIA" << endl;
+                else
+                    cout << "Ivesties metodas NEVEIKIA" << endl;
+                cout << endl;    
+
+                cout << "9. Isvesties metodas: " << endl;
+                std::ostringstream out;
+                out << s7;
+                if(out.str().find("Vardas") != string::npos && out.str().find("Pavarde") != string::npos)
+                    cout << "Isvesties metodas VEIKIA" << endl;
+                else 
+                    cout << "Isvesties metodas NEVEIKIA" << endl;            
+                break;
+            }
+            case 7:
                 cout << "Pasirinkote baigti darbą " << endl;
                 cout << "-----------------------------------------------------------" << endl;
 
@@ -786,3 +854,36 @@ void meniu(vector < Studentas > &grupe)
         }  
     }          
 }
+
+
+    std::istream& operator>>(std::istream& in, Studentas& A)
+    {
+        if (!(in >> A.Vardas_ >> A.Pavarde_)) 
+            return in;
+
+        int temp;
+        A.paz_.clear();
+        while (in >> temp && temp != -1) 
+        {
+            if (temp >= 1 && temp <= 10) 
+            {
+                A.paz_.push_back(temp);
+            }
+        }
+
+        if (!(in >> A.egz_paz_)) 
+        {
+            if (!A.paz_.empty()) 
+            {
+                A.egz_paz_ = A.paz_.back();
+                A.paz_.pop_back();
+            }
+        }
+
+        return in;
+    }
+
+    std::ostream& operator<<(std::ostream& out, const Studentas &A) {
+            out << std::left << std::setw(20) << A.pavarde() << std::setw(20) << A.vardas() << std::setw(20) << std::fixed << std::setprecision(2) << A.vidurkis() << std::setw(20) << std::fixed << std::setprecision(2) << A.mediana() << endl;
+            return out;
+        }

@@ -54,9 +54,9 @@ class Studentas {
 
         // move konstruktorius
         Studentas(Studentas&& s) noexcept : 
-            Vardas_(move(s.Vardas_)), 
-            Pavarde_(move(s.Pavarde_)), 
-            paz_(move(s.paz_)),
+            Vardas_(std::move(s.Vardas_)), 
+            Pavarde_(std::move(s.Pavarde_)), 
+            paz_(std::move(s.paz_)),
             egz_paz_(s.egz_paz_),
             Vidurkis_(s.Vidurkis_),
             Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
@@ -109,9 +109,9 @@ class Studentas {
             if (this == &s) 
                 return *this;
 
-            Vardas_ = move(s.Vardas_);
-            Pavarde_ = move(s.Pavarde_);
-            paz_ = move(s.paz_);
+            Vardas_ = std::move(s.Vardas_);
+            Pavarde_ = std::move(s.Pavarde_);
+            paz_ = std::move(s.paz_);
             egz_paz_ = s.egz_paz_;
             Vidurkis_ = s.Vidurkis_;
             Mediana_ = s.Mediana_;
@@ -119,11 +119,21 @@ class Studentas {
             return *this;
         }
 
+         friend bool operator==(const Studentas& s1, const Studentas& s2) 
+        {
+            return (s1.Vardas_ == s2.Vardas_ && s1.Pavarde_ == s2.Pavarde_ && s1.egz_paz_ == s2.egz_paz_ && s1.Vidurkis_ == s2.Vidurkis_ && s1.Mediana_ == s2.Mediana_);
+        }
+
         //input operatorius
-        friend std::istream& operator>>(std::istream& cin, Studentas& s);
+        friend std::istream& operator>>(std::istream& in, Studentas& s);
 
         //output operatorius
         friend std::ostream& operator<<(std::ostream& out, const Studentas &s);
+
+        bool Clear()
+        {
+            return (Vardas_.empty()) && (Pavarde_.empty()) && (paz_.empty()) && (egz_paz_== 0) && (Vidurkis_ == 0.0) && (Mediana_== 0.0);
+        }
 
 };
 
