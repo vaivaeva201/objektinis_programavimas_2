@@ -43,7 +43,7 @@ class Studentas : public Zmogus {
 
         // copy konstruktorius
         Studentas(const Studentas& s): 
-            Zmogus(s.Vardas_, s.Pavarde_), 
+            Zmogus(s), 
             paz_(s.paz_), 
             egz_paz_(s.egz_paz_), 
             Vidurkis_(s.Vidurkis_), 
@@ -51,15 +51,15 @@ class Studentas : public Zmogus {
 
         // move konstruktorius
         Studentas(Studentas&& s) noexcept : 
-            Zmogus(std::move(s.Vardas_), (std::move(s.Pavarde_))), 
+            Zmogus(std::move(s)), 
             paz_(std::move(s.paz_)),
             egz_paz_(s.egz_paz_),
             Vidurkis_(s.Vidurkis_),
             Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
 
         ~Studentas(){
-            this -> Vardas_.clear();
-            this -> Pavarde_.clear();
+            Vardas_.clear();
+            Pavarde_.clear();
             paz_.clear();
             egz_paz_ = 0;
             Vidurkis_ = 0.0;
@@ -86,8 +86,7 @@ class Studentas : public Zmogus {
             if (this == &s)
                 return *this;
 
-            Vardas_ = s.Vardas_;
-            Pavarde_ = s.Pavarde_;
+            Zmogus::operator=(s);
             paz_ = s.paz_;
             egz_paz_ = s.egz_paz_;
             Vidurkis_ = s.Vidurkis_;
@@ -102,8 +101,7 @@ class Studentas : public Zmogus {
             if (this == &s) 
                 return *this;
 
-            Vardas_ = std::move(s.Vardas_);
-            Pavarde_ = std::move(s.Pavarde_);
+            Zmogus::operator=(std::move(s));
             paz_ = std::move(s.paz_);
             egz_paz_ = s.egz_paz_;
             Vidurkis_ = s.Vidurkis_;
