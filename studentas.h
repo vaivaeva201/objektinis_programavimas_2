@@ -13,6 +13,7 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include "zmogus.h"
 
 using std:: string;
 using std:: vector;
