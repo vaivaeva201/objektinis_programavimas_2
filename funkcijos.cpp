@@ -841,7 +841,16 @@ void meniu(vector < Studentas > &grupe)
                 if(out.str().find("Vardas") != string::npos && out.str().find("Pavarde") != string::npos)
                     cout << "Isvesties metodas VEIKIA" << endl;
                 else 
-                    cout << "Isvesties metodas NEVEIKIA" << endl;            
+                    cout << "Isvesties metodas NEVEIKIA" << endl;    
+                cout << endl;
+                
+                /*
+                cout << "10. Žmogaus klase: " << endl;
+                Zmogus zmog("Vardas", "Pavarde");
+                cout << zmog.vardas() << " " << zmog.pavarde() << endl;
+                cout << endl;
+                */
+                    
                 break;
             }
             case 7:
