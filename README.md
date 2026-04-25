@@ -3,16 +3,16 @@
 
 Šioje versijoje klasė 'Studentas' buvo patobulinta pritaikant "Rule of Five" ir perdengtus išvesties ir ėvesties metodus.
 
-**Naudoti metodai ir jų paskirtys**
-**Rule of Five**
-Kopijavimo konstruktorius - sukuria tikslią egziztuojančio objekto reikšmių kopiją;
-Kopijavimo priskyrimo operatorius - jau inicializuotam objektui priskiriama nauja reikšmė iš kito egzistuojančio objekto;
-Move konstruktorius - perkelia vieno objekto reikšmes į kitą objektą ir ištriną pirmajį objektą;
-Move priskyrimo operatorius - perkialia vieno objekto reikšmes į jau inicializuotą default objektą ir ištrina pirmojo objektą.
-Destruktorius - atsakingas už objektui priskirtų reikšmių išvalymą;
-**Perdengti įvesties ir išvesties metodai**
-Įvesties operatorius - leidžia nuskaityti vieno studento visus duomenis tiesiai iš pasirinkto srauto;
-Išvesties operatorius - leidžia į pasirinktą srautą išvesti vieno studento duomenis;
+### **Naudoti metodai ir jų paskirtys**
+#### **Rule of Five**
+* Kopijavimo konstruktorius - sukuria tikslią egziztuojančio objekto reikšmių kopiją;
+* Kopijavimo priskyrimo operatorius - jau inicializuotam objektui priskiriama nauja reikšmė iš kito egzistuojančio objekto;
+* Move konstruktorius - perkelia vieno objekto reikšmes į kitą objektą ir ištriną pirmajį objektą;
+* Move priskyrimo operatorius - perkialia vieno objekto reikšmes į jau inicializuotą default objektą ir ištrina pirmojo objektą.
+* Destruktorius - atsakingas už objektui priskirtų reikšmių išvalymą;
+#### **Perdengti įvesties ir išvesties metodai**
+* Įvesties operatorius - leidžia nuskaityti vieno studento visus duomenis tiesiai iš pasirinkto srauto;
+* Išvesties operatorius - leidžia į pasirinktą srautą išvesti vieno studento duomenis;
 
 **"Class" ir "Struct" tyrimas**
 
@@ -37,4 +37,4 @@ Galime patebėti, jog pritaikius 'Rule of Five' ir perdengtus metobus CLASS grei
 | STRUCT |  100000 | -O3 | 120K | 0.668681 s |
 | STRUCT |  1000000 | -O3 | 120K | 6.9911 s |
 
-![Testavimo rezultatai](Screenshot 2026-04-25 at 16.49.07.png)
+![Testavimo rezultatai](Screenshot%202026-04-25%20at%2016.49.07.png)
