@@ -26,28 +26,24 @@ using std:: right;
 using std:: endl;
 
 
-class Studentas {
+class Studentas : public Zmogus {
     private:
-        string Vardas_;
-        string Pavarde_;
         vector <int> paz_;
         int egz_paz_;
-        //double rez_;
         double Vidurkis_;
         double Mediana_;
 
     public:
 
-        Studentas() : Vardas_(""), Pavarde_(""), paz_({0}), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
+        Studentas() : Zmogus(), paz_({0}), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { } 
 
-        Studentas(string v, string p, vector<int> pazymiai) : Vardas_(v), Pavarde_(p), paz_(pazymiai), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { }
+        Studentas(string v, string p, vector<int> pazymiai) : Zmogus(v, p), paz_(pazymiai), egz_paz_(0), Vidurkis_(0.0), Mediana_(0.0) { }
 
         Studentas(std::istream& is);
 
         // copy konstruktorius
         Studentas(const Studentas& s): 
-            Vardas_(s.Vardas_), 
-            Pavarde_(s.Pavarde_), 
+            Zmogus(s.Vardas_, s.Pavarde_), 
             paz_(s.paz_), 
             egz_paz_(s.egz_paz_), 
             Vidurkis_(s.Vidurkis_), 
@@ -55,31 +51,27 @@ class Studentas {
 
         // move konstruktorius
         Studentas(Studentas&& s) noexcept : 
-            Vardas_(std::move(s.Vardas_)), 
-            Pavarde_(std::move(s.Pavarde_)), 
+            Zmogus(std::move(s.Vardas_), (std::move(s.Pavarde_))), 
             paz_(std::move(s.paz_)),
             egz_paz_(s.egz_paz_),
             Vidurkis_(s.Vidurkis_),
             Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
 
         ~Studentas(){
-            Vardas_.clear();
-            Pavarde_.clear();
+            this -> Vardas_.clear();
+            this -> Pavarde_.clear();
             paz_.clear();
             egz_paz_ = 0;
             Vidurkis_ = 0.0;
             Mediana_ = 0.0;
         }
 
-        inline string vardas() const { return Vardas_; }
-        inline string pavarde() const { return Pavarde_; }
         inline const vector<int>& pazymiai() const { return paz_; }
         inline int egzaminas() const { return egz_paz_; }
         inline double vidurkis() const { return Vidurkis_; }
         inline double mediana() const { return Mediana_; }
 
-        inline void setVardas(string var) { Vardas_ = var; }
-        inline void setPavarde(string pav) { Pavarde_ = pav; }
+
         inline void setGalutinisV(double galutVid) { Vidurkis_ = galutVid; }
         inline void setGalutinisM(double galutMed) { Mediana_ = galutMed; }
         inline void setEgzaminas(int egz) {egz_paz_ = egz; }
@@ -117,6 +109,10 @@ class Studentas {
             Vidurkis_ = s.Vidurkis_;
             Mediana_ = s.Mediana_;
 
+            s.egz_paz_ = 0; 
+            s.Vidurkis_ = 0.0; 
+            s.Mediana_ = 0.0;
+
             return *this;
         }
 
@@ -134,6 +130,11 @@ class Studentas {
         bool Clear()
         {
             return (Vardas_.empty()) && (Pavarde_.empty()) && (paz_.empty()) && (egz_paz_== 0) && (Vidurkis_ == 0.0) && (Mediana_== 0.0);
+        }
+
+        void printInfo() const override 
+        {
+            cout << "Vardas: " << vardas() << ", Pavarde: " << pavarde() << endl;
         }
 
 };
