@@ -15,7 +15,7 @@ run2:
 	./programa
 
 run3:
-	g++ -std=c++17 -O3 strategija_3.cpp funkcijos.cpp -o programa
+	g++ -std=c++17  -O3 strategija_3.cpp funkcijos.cpp -o programa
 	./programa	
 
 clean:

@@ -28,30 +28,11 @@ void skaityti_failus (string pav, Container& grupe)
         if(eil.empty()) continue;
         Studentas A;
         std::istringstream eilute(eil);
-        eilute >> v >> p;
-
-        A.setVardas(v);
-        A.setPavarde(p);
-        
-        vector<int> temp_paz;
-        int pazymys;
-
-        while (eilute >> pazymys) 
-        {
-            temp_paz.push_back(pazymys);
-        }
-        
-        if (!temp_paz.empty()) 
-        {
-            int egz = temp_paz.back();
-            temp_paz.pop_back(); 
-
-            A.setPazymiai(temp_paz);
-            A.setEgzaminas(egz);
-
+        if (eilute >> A) 
+        { 
             skaiciuoti_viska(A);
             grupe.push_back(std::move(A));
-        }
+        }    
     }
     fd.close();
 }
