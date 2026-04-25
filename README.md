@@ -4,9 +4,9 @@
 Šioje versijoje pridėt nauja klasė 'Zmogus', ši klasė yra abstrakti. Dabar klasė 'Studentas' paveldi klasę 'Zmogus', atitinkamai pakeisti konstruktoriai ir destruktorius.
 
 Kadandi klasė 'Zmogus' yra abstrakti negalima sukurti tokio tipo objekto:
-* ![Testavimo rezultatai](Screenshot%2026-04-25%at%18.27.05.png)
-Patikrinti klases buvo naudoti tie patys testai kaip ir v1.2 versijoje:
-* ![Testavimo rezultatai](Screenshot%2026-04-25%at%18.33.35.png)
+* ![Testavimo rezultatai](Nuotrauka1.png)
+* Patikrinti klases buvo naudoti tie patys testai kaip ir v1.2 versijoje:
+* ![Testavimo rezultatai](Nuotrauka2.png)
 
 **"Class" ir "Struct" tyrimas**
 
