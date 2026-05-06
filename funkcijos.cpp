@@ -865,32 +865,38 @@ void meniu(vector < Studentas > &grupe)
 }
 
 
-    std::istream& operator>>(std::istream& in, Studentas& A)
-    {
-        if (!(in >> A.Vardas_ >> A.Pavarde_)) 
-            return in;
-
-        int temp;
-        A.paz_.clear();
-        while (in >> temp && temp != -1) 
-        {
-            if (temp >= 1 && temp <= 10) 
-            {
-                A.paz_.push_back(temp);
-            }
-        }
-
-        if (!(in >> A.egz_paz_)) 
-        {
-            if (!A.paz_.empty()) 
-            {
-                A.egz_paz_ = A.paz_.back();
-                A.paz_.pop_back();
-            }
-        }
-
+    std::istream& operator>>(std::istream& in, Studentas& s) {
+    string eilute;
+    if (!(getline(in, eilute)) || eilute.empty()) 
         return in;
+
+    std::istringstream iss(eilute);
+    string v, p;
+    
+    if (!(iss >> v >> p)) 
+        return in;
+
+    s.setVardas(v);
+    s.setPavarde(p);
+
+    vector<int> temp_paz;
+    int balas;
+    
+    while (iss >> balas) 
+    {
+        temp_paz.push_back(balas);
     }
+
+    if (!temp_paz.empty()) 
+    {
+        
+        s.setEgzaminas(temp_paz.back()); 
+        temp_paz.pop_back();
+        s.setPazymiai(temp_paz);
+    }
+
+    return in;
+}
 
     std::ostream& operator<<(std::ostream& out, const Studentas &A) {
             out << std::left << std::setw(20) << A.pavarde() << std::setw(20) << A.vardas() << std::setw(20) << std::fixed << std::setprecision(2) << A.vidurkis() << std::setw(20) << std::fixed << std::setprecision(2) << A.mediana() << endl;

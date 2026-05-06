@@ -78,15 +78,11 @@ void stunedu_skirstymas (Container& grupe)
             kietakai.push_back(std::move(x));
     }
     
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>)
-    {
-        vargsiukai.shrink_to_fit();
-        kietakai.shrink_to_fit();
-        grupe.shrink_to_fit();
-    }
+    isvedimas(vargsiukai, kietakai);
 
     grupe.clear(); 
 }
+
 
 template <typename Container>
 void pirma_strategija(Container& grupe){
@@ -113,22 +109,14 @@ void pirma_strategija(Container& grupe){
 template <typename Container>
 void antra_strategija (Container& grupe)
 {
-
     Container vargsiukai;
-    while (grupe.back().vidurkis() < 5) 
+    while (!grupe.empty() && grupe.back().vidurkis() < 5.0) 
     {
-        vargsiukai.push_back(grupe.back());
+        vargsiukai.push_back(std::move(grupe.back())); 
         grupe.pop_back();
     }
 
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>)
-    {
-        grupe.shrink_to_fit();
-        vargsiukai.shrink_to_fit();
-    }
-
     isvedimas(vargsiukai, grupe);
-
 }
 
 template <typename Container>
