@@ -116,12 +116,16 @@ class Studentas {
             Vidurkis_ = s.Vidurkis_;
             Mediana_ = s.Mediana_;
 
+             s.egz_paz_ = 0; 
+             s.Vidurkis_ = 0.0; 
+             s.Mediana_ = 0.0; 
+
             return *this;
         }
 
          friend bool operator==(const Studentas& s1, const Studentas& s2) 
         {
-            return (s1.Vardas_ == s2.Vardas_ && s1.Pavarde_ == s2.Pavarde_ && s1.egz_paz_ == s2.egz_paz_ && s1.Vidurkis_ == s2.Vidurkis_ && s1.Mediana_ == s2.Mediana_);
+            return (s1.Vardas_ == s2.Vardas_ && s1.Pavarde_ == s2.Pavarde_ && s1.egz_paz_ == s2.egz_paz_ && s1.Vidurkis_ == s2.Vidurkis_ && s1.Mediana_ == s2.Mediana_ && s1.paz_.size() == s2.paz_.size());
         }
 
         //input operatorius
