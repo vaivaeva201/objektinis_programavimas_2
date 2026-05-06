@@ -58,12 +58,7 @@ class Studentas : public Zmogus {
             Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
 
         ~Studentas(){
-            Vardas_.clear();
-            Pavarde_.clear();
-            paz_.clear();
-            egz_paz_ = 0;
-            Vidurkis_ = 0.0;
-            Mediana_ = 0.0;
+            Clear();
         }
 
         inline const vector<int>& pazymiai() const { return paz_; }
@@ -107,9 +102,7 @@ class Studentas : public Zmogus {
             Vidurkis_ = s.Vidurkis_;
             Mediana_ = s.Mediana_;
 
-            s.egz_paz_ = 0; 
-            s.Vidurkis_ = 0.0; 
-            s.Mediana_ = 0.0;
+            Clear();
 
             return *this;
         }
