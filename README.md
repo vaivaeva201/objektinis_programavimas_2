@@ -20,7 +20,7 @@ Atlikus tyrimus galime pamatyti, jog greičiausia yra trečioji trategija, naudo
     <li>Susiinstaliuoti <b>make</b> (Windows naudotojams rekomenduojama per <a href="https://gnuwin32.sourceforge.net/packages/make.htm">GNUWin32</a>)</li>
     <li>Atsidaryti terminalą</li>
     <li>Klonuoti programos repozitoriją:
-        <pre><code>git clone https://github.com/vaivaeva201/objektinis_programavimas_1</code></pre>
+        <pre><code>git clone https://github.com/vaivaeva201/objektinis_programavimas_2</code></pre>
     </li>
     <li><b>Užeiti į projekto aplanką:</b>
         <pre><code>cd objektinis_programavimas_1</code></pre>
