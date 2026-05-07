@@ -21,7 +21,7 @@ TEST_CASE("Studento klasės 'Rule of five' testai", "[studentas]")
         Studentas perkeltas(std::move(originalus));
 
         REQUIRE(perkeltas == originalus_2);
-        REQUIRE(originalus.Clear() == true);
+        REQUIRE(originalus.isClear() == true);
     }
 
     SECTION("Copy assignment operatorius")
@@ -43,15 +43,14 @@ TEST_CASE("Studento klasės 'Rule of five' testai", "[studentas]")
         perkeltas= std::move(originalus);
 
         REQUIRE(perkeltas == originalus_2);
-        REQUIRE(originalus.Clear() == true);
+        REQUIRE(originalus.isClear() == true);
     }
 
-    SECTION("Destruktorius")
+    SECTION("Objekto išvalymas (Clear)")
     {
-        Studentas  originalus("Vardas", "Pavarde", {10, 9});
-
-        originalus.Clear();
-
-        REQUIRE(originalus.Clear() == true);
+        Studentas s;
+        s.Clear();
+        
+        REQUIRE(s.isClear());
     }
 }

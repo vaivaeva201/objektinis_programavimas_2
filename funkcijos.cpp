@@ -801,7 +801,7 @@ void meniu(vector < Studentas > &grupe)
 
                 cout << "5. Move konstruktorius: " << endl;
                 Studentas s5(std::move(s2));
-                if(s5 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s2.Clear() == true)
+                if(s5 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s2.isClear() == true)
                     cout<<"Move konstruktorius VEIKIA"<<endl;
                 else 
                     cout<<"Move konstruktorius NEVEIKIA"<<endl;
@@ -811,7 +811,7 @@ void meniu(vector < Studentas > &grupe)
                 Studentas s("Vardas", "Pavarde", {9, 8, 7, 6, 9});
                 Studentas s6;
                 s6 = std::move(s);
-                if(s6 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s.Clear() == true)
+                if(s6 == Studentas("Vardas", "Pavarde", {9, 8, 7, 6, 9}) && s.isClear() == true)
                     cout<<"Move assignment VEIKIA"<<endl;
                 else 
                     cout<<"Move assignment operatorius NEVEIKIA"<<endl;
@@ -819,7 +819,7 @@ void meniu(vector < Studentas > &grupe)
 
                 cout << "7. Destruktorius: " << endl;
                 s4.~Studentas();
-                if(s4.Clear() == true)
+                if(s4.isClear() == true)
                     cout<<"Destruktorius VEIKIA"<<endl;
                 else 
                     cout<<"Destruktorius NEVEIKIA"<<endl;

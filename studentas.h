@@ -55,7 +55,7 @@ class Studentas : public Zmogus {
             paz_(std::move(s.paz_)),
             egz_paz_(s.egz_paz_),
             Vidurkis_(s.Vidurkis_),
-            Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; }
+            Mediana_(s.Mediana_) { s.egz_paz_ = 0; s.Vidurkis_ = 0.0; s.Mediana_ = 0.0; s.Clear();}
 
         ~Studentas(){
             Clear();
@@ -102,7 +102,7 @@ class Studentas : public Zmogus {
             Vidurkis_ = s.Vidurkis_;
             Mediana_ = s.Mediana_;
 
-            Clear();
+            s.Clear();
 
             return *this;
         }
@@ -118,9 +118,22 @@ class Studentas : public Zmogus {
         //output operatorius
         friend std::ostream& operator<<(std::ostream& out, const Studentas &s);
 
-        bool Clear()
+        void Clear()
         {
-            return (Vardas_.empty()) && (Pavarde_.empty()) && (paz_.empty()) && (egz_paz_== 0) && (Vidurkis_ == 0.0) && (Mediana_== 0.0);
+            Vardas_.clear(); 
+            Pavarde_.clear();
+            paz_.clear();
+            egz_paz_= 0;
+            Vidurkis_ = 0.0;
+            Mediana_= 0.0;
+        }
+
+        bool isClear(){
+            if(Vardas_.empty() && Pavarde_.empty() && paz_.empty() && egz_paz_ == 0 && Vidurkis_ == 0.0 && Mediana_ == 0.0) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         void printInfo() const override 
