@@ -1,0 +1,108 @@
+\chapter{Antras\+\_\+\+Laboratorinis }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Antras\_Laboratorinis@{Antras\_Laboratorinis}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Programos aprašymas}{Programos aprašymas}}\label{md__r_e_a_d_m_e_autotoc_md1}
+Ši programa yra skirta apdoroti studentų duomenis ir jų akedeminius pasiekimus. {\bfseries{Pagrindinės programos funkcijos}}
+\begin{DoxyItemize}
+\item 1. Įvesti visus studento duomenis ranka;
+\item 2. Sugeneruoti atsitiktinius pažymius, bet studento vardą ir pavardę įvesti ranka;
+\item 3. Sudenetuoti studento vardą, pavardę ir pažymius;
+\item 4. Nuskaityti duomenis iš failo;
+\item 5. Testuoti programą;
+\end{DoxyItemize}
+
+Taip pat programoje yra trys strategijos, kurios skirtos parodyti kaip kinta programos veikimo laikas nuo naudojamų konteinerių (vector, list, deque) duomenų skirstymo į dvi grupes (pažangių ir nepažangių) metu.
+
+Pirmoje strategijoje skirstymas vyksta į du to paties tipo konteinerius, antrosios strategijos metu sukuriamas tik vienas papildomas konteineris ir į jį perkeliami nepažangūs mokiniai, o pažangūs lieka pradiniame. Trečioji strategija yra optimizuota antroji strategija naudojant Standard Template Library (STL)
+
+Atlikus tyrimus galime pamatyti, jog greičiausia yra trečioji trategija, naudojant vector.
+
+\doxysubsection*{Naudojimosi instrukcija}
+
+
+\begin{DoxyEnumerate}
+\item Susiinstaliuoti {\bfseries{make}} (Windows naudotojams rekomenduojama per \href{https://gnuwin32.sourceforge.net/packages/make.htm}{\texttt{GNUWin32}}) 
+\item Atsidaryti terminalą 
+\item Klonuoti programos repozitoriją:\+ 
+\begin{DoxyPre}{\ttfamily git clone \href{https://github.com/vaivaeva201/objektinis_programavimas_2}{\texttt{https://github.com/vaivaeva201/objektinis\_programavimas\_2}}}\end{DoxyPre}
+  
+\item {\bfseries{Užeiti į projekto aplanką:\+}} 
+\begin{DoxyPre}{\ttfamily cd objektinis\_programavimas\_1}\end{DoxyPre}
+  
+\item Paleisti norimą funkciją:\+ 
+\begin{DoxyItemize}
+\item 
+\begin{DoxyPre}{\ttfamily make main}\end{DoxyPre}
+ -\/ pagrindinė programa 
+\item 
+\begin{DoxyPre}{\ttfamily make run0}\end{DoxyPre}
+ -\/ pradinio tyrimo paleidimas 
+\item 
+\begin{DoxyPre}{\ttfamily make run1}\end{DoxyPre}
+ -\/ 1 strategijos testavimas 
+\item 
+\begin{DoxyPre}{\ttfamily make run2}\end{DoxyPre}
+ -\/ 2 strategijos testavimas 
+\item 
+\begin{DoxyPre}{\ttfamily make run3}\end{DoxyPre}
+ -\/ 3 strategijos testavimas 
+\item 
+\begin{DoxyPre}{\ttfamily make unit}\end{DoxyPre}
+ -\/ unit testai 
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Versija -\/ v1.\+1}{Versija -\/ v1.\+1}}\label{md__r_e_a_d_m_e_autotoc_md2}
+Šakoje v1.\+1 lyginome "{}class"{} ir "{}struct"{} naudojimą apdorojant studentų duomenis. v1.\+1 versija pritaikyta "{}class"{} ir buvo lyginama su v1.\+0 versijos "{}struct"{}. Buvo naudojamas vektor konteineris su 3 strategija. Pateikti rezultatai yra trijų iteracijų vidurkis.
+
+
+\begin{DoxyTable}{5}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}Tipas  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Failo dydis  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Optiizavimo vėliava  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}.exe failo dydis  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Programos veilimo laikas  \\
+CLASS  &100000  &-\/  &239K  &2.\+48582 s  \\
+CLASS  &1000000  &-\/  &239K  &25.\+032 s  \\
+STRUCT  &100000  &-\/  &238K  &1.\+93843 s  \\
+STRUCT  &1000000  &-\/  &238K  &19.\+6844 s  \\
+CLASS  &100000  &-\/O1  &121K  &0.\+84203 s  \\
+CLASS  &1000000  &-\/ O1  &121K  &8.\+11251 s  \\
+STRUCT  &100000  &-\/O1  &120K  &0.\+714521 s  \\
+STRUCT  &1000000  &-\/O1  &120K  &7.\+23889 s  \\
+CLASS  &100000  &-\/O2  &121K  &0.\+816232 s  \\
+CLASS  &1000000  &-\/O2  &121K  &7.\+9286 s  \\
+STRUCT  &100000  &-\/O2  &120K  &0.\+672481 s  \\
+STRUCT  &1000000  &-\/O2  &120K  &6.\+98227 s  \\
+CLASS  &100000  &-\/O3  &121K  &0.\+792985 s  \\
+CLASS  &1000000  &-\/O3  &121K  &7.\+81915 s  \\
+STRUCT  &100000  &-\/O3  &120K  &0.\+668681 s  \\
+STRUCT  &1000000  &-\/O3  &120K  &6.\+9911 s  \\
+\end{DoxyTable}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{Versija -\/ v1.\+2}{Versija -\/ v1.\+2}}\label{md__r_e_a_d_m_e_autotoc_md3}
+Šioje versijoje klasė \textquotesingle{}\doxylink{class_studentas}{Studentas}\textquotesingle{} buvo patobulinta pritaikant "{}\+Rule of Five"{} ir perdengtus išvesties ir ėvesties metodus.\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{{\bfseries{Naudoti metodai ir jų paskirtys}}}{{\bfseries{Naudoti metodai ir jų paskirtys}}}}\label{md__r_e_a_d_m_e_autotoc_md4}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsubsection{\texorpdfstring{{\bfseries{Rule of Five}}}{{\bfseries{Rule of Five}}}}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item Kopijavimo konstruktorius -\/ sukuria tikslią egziztuojančio objekto reikšmių kopiją;
+\item Kopijavimo priskyrimo operatorius -\/ jau inicializuotam objektui priskiriama nauja reikšmė iš kito egzistuojančio objekto;
+\item Move konstruktorius -\/ perkelia vieno objekto reikšmes į kitą objektą ir ištriną pirmajį objektą;
+\item Move priskyrimo operatorius -\/ perkialia vieno objekto reikšmes į jau inicializuotą default objektą ir ištrina pirmojo objektą.
+\item Destruktorius -\/ atsakingas už objektui priskirtų reikšmių išvalymą; 
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsubsection{\texorpdfstring{{\bfseries{Perdengti įvesties ir išvesties metodai}}}{{\bfseries{Perdengti įvesties ir išvesties metodai}}}}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Įvesties operatorius -\/ leidžia nuskaityti vieno studento visus duomenis tiesiai iš pasirinkto srauto;
+\item Išvesties operatorius -\/ leidžia į pasirinktą srautą išvesti vieno studento duomenis;
+\end{DoxyItemize}
+
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysection{\texorpdfstring{Versija -\/ v1.\+5}{Versija -\/ v1.\+5}}\label{md__r_e_a_d_m_e_autotoc_md7}
+Šioje versijoje pridėt nauja klasė \textquotesingle{}\doxylink{class_zmogus}{Zmogus}\textquotesingle{}, ši klasė yra abstrakti. Dabar klasė \textquotesingle{}\doxylink{class_studentas}{Studentas}\textquotesingle{} paveldi klasę \textquotesingle{}\doxylink{class_zmogus}{Zmogus}\textquotesingle{}, atitinkamai pakeisti konstruktoriai ir destruktorius.
+
+Kadandi klasė \textquotesingle{}\doxylink{class_zmogus}{Zmogus}\textquotesingle{} yra abstrakti negalima sukurti tokio tipo objekto:\+ 
+\begin{DoxyItemize}
+\item Patikrinti klases buvo naudoti tie patys testai kaip ir v1.\+2 versijoje:\+ 
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{\texorpdfstring{Versija -\/ v2.\+0}{Versija -\/ v2.\+0}}\label{md__r_e_a_d_m_e_autotoc_md8}
+v2.\+0 versijoje sukurta dokumentacija ir atlikti Unit testai. Sukurti testam buvo naudojama Catch2 testavimo framework. \hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysection{\texorpdfstring{Kompiuterio charakteristikos}{Kompiuterio charakteristikos}}\label{md__r_e_a_d_m_e_autotoc_md9}
+{\bfseries{Testuojamos sistemos parametrai}} 
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Parametras  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Reikšmė  \\
+CPU  &Apple M1, 8 core  \\
+RAM  &8 GB  \\
+SSD  &256 GB  \\
+\end{DoxyTable}
