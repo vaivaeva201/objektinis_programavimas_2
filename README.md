@@ -76,21 +76,21 @@ Atlikus tyrimus galime pamatyti, jog greičiausia yra trečioji trategija, naudo
 * Įvesties operatorius - leidžia nuskaityti vieno studento visus duomenis tiesiai iš pasirinkto srauto;
 * Išvesties operatorius - leidžia į pasirinktą srautą išvesti vieno studento duomenis;
 
-![Testavimo rezultatai](nuotrauka4.png)
+![Testavimo rezultatai](nuotraukos/nuotrauka4.png)
 
 # Versija - v1.5
 
 Šioje versijoje pridėt nauja klasė 'Zmogus', ši klasė yra abstrakti. Dabar klasė 'Studentas' paveldi klasę 'Zmogus', atitinkamai pakeisti konstruktoriai ir destruktorius.
 
 Kadandi klasė 'Zmogus' yra abstrakti negalima sukurti tokio tipo objekto:
-![Testavimo rezultatai](Nuotrauka1.png)
+![Testavimo rezultatai](nuotraukos/Nuotrauka1.png)
 * Patikrinti klases buvo naudoti tie patys testai kaip ir v1.2 versijoje:
-![Testavimo rezultatai](Nuotrauka2.png)
+![Testavimo rezultatai](nuotraukos/Nuotrauka2.png)
 
 # Versija - v2.0
 
 v2.0 versijoje sukurta dokumentacija ir atlikti Unit testai. Sukurti testam buvo naudojama Catch2 testavimo framework. 
-![Testavimo rezultatai](nuotrauka3.png)
+![Testavimo rezultatai](nuotraukos/nuotrauka3.png)
 
 
 # Kompiuterio charakteristikos
