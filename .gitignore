@@ -52,3 +52,5 @@ programa
 antrastes.h
 funkijos.h
 unit_test
+.DS_Store
+*.zip
