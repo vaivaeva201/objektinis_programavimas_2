@@ -76,7 +76,7 @@ Atlikus tyrimus galime pamatyti, jog greičiausia yra trečioji trategija, naudo
 * Įvesties operatorius - leidžia nuskaityti vieno studento visus duomenis tiesiai iš pasirinkto srauto;
 * Išvesties operatorius - leidžia į pasirinktą srautą išvesti vieno studento duomenis;
 
-![Testavimo rezultatai](Screenshot%202026-04-25%20at%2016.49.07.png)
+![Testavimo rezultatai](nuotrauka4.png)
 
 # Versija - v1.5
 
